@@ -1,0 +1,71 @@
+@extends('layouts.blog')
+
+@section('content')
+<div class="w-6/12 mx-auto border py-4 px-10">
+    <h5 class="text-center font-semibold">Create New Post</h5>
+
+    <form action="{{ route('post.store') }}" method="POST" class="mt-6" enctype="multipart/form-data">
+        @csrf
+        <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full px-3 mb-6 md:mb-0">
+                <label for="title" class="block capitalize tracking-wide text-gray-700 text-xs font-bold mb-2">
+                    Blog Title
+                </label>
+                <input autofocus class=" form-control" name="title" id="title" type="title" value="{{ old('title') }}" required>
+                @error('title')
+                    <span class="text-xs text-red-500" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+        </div>
+        <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full px-3 mb-6 md:mb-0">
+                <label for="category" class="block capitalize tracking-wide text-gray-700 text-xs font-bold mb-2">
+                    Blog Category
+                </label>
+                <select class=" form-control" name="category_id" id="category" required>
+                    <option value="">Choose Category</option>
+                    @foreach ($categories as $category)
+                        <option {{ old('category_id') == $category->id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+                @error('category_id')
+                    <span class="text-xs text-red-500" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+        </div>
+        <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full px-3 mb-6 md:mb-0">
+                <label for="image" class="block capitalize tracking-wide text-gray-700 text-xs font-bold mb-2">
+                    Feature Image
+                </label>
+                <input class=" form-control" name="image" id="image" type="file"  required>
+                @error('image')
+                    <span class="text-xs text-red-500" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+        </div>
+        <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full px-3 mb-6 md:mb-0">
+                <label for="description" class="block capitalize tracking-wide text-gray-700 text-xs font-bold mb-2">
+                    Blog Description
+                </label>
+                <textarea class=" form-control" name="description" id="description" type="description" required rows="5">{{ old('description') }}</textarea>
+                @error('description')
+                    <span class="text-xs text-red-500" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+        </div>
+        <button type="submit" class="bg-red-400 text-white w-full text-white py-4 px-4 rounded focus:outline-none focus:shadow-outline">
+            Publish Blog
+        </button>
+    </form>
+</div>
+@endsection
