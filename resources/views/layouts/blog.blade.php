@@ -33,8 +33,12 @@
                                     <li class="nav-item hover:text-red-500"><a href="{{ route('register') }}" class="nav-link px-4">Register</a></li>
                                 @endguest
                                 @auth
-                                <li class="nav-item hover:text-red-500"><a href="{{ route('post.user.post') }}" class="nav-link px-4">My Posts</a></li>
-                                <li class="nav-item hover:text-red-500"><a href="{{ route('post.create') }}" class="nav-link px-4">Add Post</a></li>
+                                @if (auth()->user()->role_id != 81)
+                                    <li class="nav-item hover:text-red-500"><a href="{{ route('post.user.post') }}" class="nav-link px-4">My Posts</a></li>
+                                    <li class="nav-item hover:text-red-500"><a href="{{ route('post.create') }}" class="nav-link px-4">Add Post</a></li>
+                                @else
+                                    <li class="nav-item hover:text-red-500"><a href="{{ route('admin.dashboard') }}" class="nav-link px-4">Dashboard</a></li>
+                                @endif
                                 <li class="nav-item hover:text-red-500"><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout_form').submit();"  class="nav-link px-4">Logout</a></li>
                                 <form id="logout_form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
